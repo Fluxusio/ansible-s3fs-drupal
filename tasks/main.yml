@@ -1,0 +1,9 @@
+---
+
+- name: Set credentials for s3fs public filesystem
+  lineinfile: dest=/etc/passwd-s3fs create=yes line={{ amazons3_bucket }}:{{ aws_key }}:{{ aws_secret }}
+  sudo: yes
+
+- name: Set permissions on /etc/passwd-s3fs
+  file: path=/etc/passwd-s3fs owner=root group={{ remote_user }} mode=0440
+  sudo: yes
