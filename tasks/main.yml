@@ -4,6 +4,19 @@
   lineinfile: dest=/etc/passwd-s3fs create=yes line={{ amazons3_bucket }}:{{ aws_key }}:{{ aws_secret }}
   sudo: yes
 
+- name: Set credentials for s3fs private filesystem
+  lineinfile: dest=/etc/passwd-s3fs create=yes line={{ amazons3_bucket_private }}:{{ aws_key_private }}:{{ aws_secret_private }}
+  when: amazons3_bucket_private is defined and amazons3_bucket_private
+  sudo: yes
+
 - name: Set permissions on /etc/passwd-s3fs
-  file: path=/etc/passwd-s3fs owner=root group={{ remote_user }} mode=0440
+  file: path=/etc/passwd-s3fs owner=root group={{ s3_mount_group | default('ubuntu') }} mode=0440
+  sudo: yes
+
+- name: Mount public s3 bucket
+  mount: fstype=fuse name=/mnt/s3public src=s3fs#{{ amazons3_bucket }} opts=allow_other state=mounted
+  sudo: yes
+
+- name: Mount private s3 bucket
+  mount: fstype=fuse name=/mnt/s3private src=s3fs#{{ amazons3_bucket_private }} opts=allow_other state=mounted
   sudo: yes
