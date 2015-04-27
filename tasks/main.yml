@@ -14,9 +14,19 @@
   sudo: yes
 
 - name: Mount public s3 bucket
-  mount: fstype=fuse name=/mnt/s3public src=s3fs#{{ amazons3_bucket }} opts=allow_other state=mounted
+  mount:
+    fstype=fuse
+    name=/mnt/s3public
+    src=s3fs#{{ amazons3_bucket }}
+    opts=allow_other,use_cache=/var/cache/s3public
+    state=mounted
   sudo: yes
 
 - name: Mount private s3 bucket
-  mount: fstype=fuse name=/mnt/s3private src=s3fs#{{ amazons3_bucket_private }} opts=allow_other state=mounted
+  mount:
+    fstype=fuse
+    name=/mnt/s3private
+    src=s3fs#{{ amazons3_bucket_private }}
+    opts=allow_other,use_cache=/var/cache/s3private
+    state=mounted
   sudo: yes
