@@ -27,6 +27,6 @@
     fstype=fuse
     name=/mnt/s3private
     src=s3fs#{{ amazons3_bucket_private }}
-    opts=allow_other,use_cache=/var/cache/s3private
+    opts=allow_other,use_cache=/var/cache/s3private,uid=1000,gid=33
     state=mounted
   sudo: yes
