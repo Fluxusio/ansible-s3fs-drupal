@@ -13,6 +13,11 @@
   file: path=/etc/passwd-s3fs owner=root group={{ s3_mount_group | default('ubuntu') }} mode=0440
   sudo: yes
 
+- name: Unmount public s3 bucket
+  shell: fusermount -u /mnt/s3public
+  ignore_errors: yes
+  sudo: yes
+
 - name: Mount public s3 bucket
   mount:
     fstype=fuse
@@ -20,6 +25,11 @@
     src=s3fs#{{ amazons3_bucket }}
     opts=allow_other,use_cache=/var/cache/s3public,uid={{ s3_mount_uid }},gid={{ s3_mount_gid }}
     state=mounted
+  sudo: yes
+
+- name: Unmount private s3 bucket
+  shell: fusermount -u /mnt/s3private
+  ignore_errors: yes
   sudo: yes
 
 - name: Mount private s3 bucket
