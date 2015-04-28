@@ -18,7 +18,7 @@
     fstype=fuse
     name=/mnt/s3public
     src=s3fs#{{ amazons3_bucket }}
-    opts=allow_other,use_cache=/var/cache/s3public
+    opts=allow_other,use_cache=/var/cache/s3public,uid=1000,gid=33
     state=mounted
   sudo: yes
 
