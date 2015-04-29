@@ -23,7 +23,7 @@
     fstype=fuse
     name=/mnt/s3public
     src=s3fs#{{ amazons3_bucket }}
-    opts=allow_other,use_cache=/var/cache/s3public,uid={{ s3_mount_uid }},gid={{ s3_mount_gid }},umask=117
+    opts=allow_other,use_cache=/var/cache/s3public,uid={{ s3_mount_uid }},gid={{ s3_mount_gid }},umask=007
     state=mounted
   sudo: yes
 
@@ -37,6 +37,6 @@
     fstype=fuse
     name=/mnt/s3private
     src=s3fs#{{ amazons3_bucket_private }}
-    opts=allow_other,use_cache=/var/cache/s3private,uid={{ s3_mount_uid }},gid={{ s3_mount_gid }},umask=117
+    opts=allow_other,use_cache=/var/cache/s3private,uid={{ s3_mount_uid }},gid={{ s3_mount_gid }},umask=007
     state=mounted
   sudo: yes
